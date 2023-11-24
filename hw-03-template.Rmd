@@ -98,27 +98,27 @@ b) Comment on the overall performance of the linear regression model. Support yo
 For each additional education qualification the weekly time spent on email is expected to increase by 0.685 hrs,this shows a slight positive correlation between education and email time. One issue with the model is that the y intercept is at -2.79 hours which is impossible for this data set. A graph of the residuals show a fanning effect in the x direction indicating that a linear regression model may be unsuitable.
 
 ```{r}
-ggplot(data = gss16_advfront, aes(x = educ, y = emailhr)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  labs(x = "Education level", y = "Weekly time on email(hours)", title = "Predicting weekly hours spent on email from education", subtitle = "Linear Regression Model")
+#ggplot(data = gss16_advfront, aes(x = educ, y = emailhr)) +
+  #geom_point() +
+  #geom_smooth(method = "lm") +
+  #labs(x = "Education level", y = "Weekly time on email(hours)", title = "Predicting weekly hours spent #on email from education", subtitle = "Linear Regression Model")
 
-linear_reg() %>%
-  set_engine("lm") %>%
-  fit(emailhr~educ, data = gss16_advfront) %>%
-  tidy()
+#linear_reg() %>%
+  #set_engine("lm") %>%
+  #fit(emailhr~educ, data = gss16_advfront) %>%
+  #tidy()
 
-gss16_advfront <- linear_reg() %>%
-  set_engine("lm") %>%
-  fit(emailhr~educ, data = gss16_advfront) 
+#gss16_advfront <- linear_reg() %>%
+  #set_engine("lm") %>%
+  #fit(emailhr~educ, data = gss16_advfront) 
 
-gss16_advfront_aug <- augment(gss16_advfront$fit)
+#gss16_advfront_aug <- augment(gss16_advfront$fit)
 
 
-ggplot(gss16_advfront_aug, mapping = aes(x = .fitted, y = .resid)) +
-  geom_point(alpha = 0.5) +
-  geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
-  labs(x = "Predicted weekly email time", y = "Residuals")
+#ggplot(gss16_advfront_aug, mapping = aes(x = .fitted, y = .resid)) +
+  #geom_point(alpha = 0.5) +
+  #geom_hline(yintercept = 0, color = "gray", lty = "dashed") +
+  #labs(x = "Predicted weekly email time", y = "Residuals")
 
   
 ```
@@ -157,6 +157,11 @@ gss16_rec_1 <- gss16_rec_1 %>%
 
 gss16_mod_1 <- logistic_reg() %>%
   set_engine("glm")
+
+gss16_wflow_1 <-workflow() %>%
+  add(gss16_mod_1) %>%
+  add(gss16_rec_1)
+
 ```
 
 b) Explain why you have chosen the model that you have selected.
